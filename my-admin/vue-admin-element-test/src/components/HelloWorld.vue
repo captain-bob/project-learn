@@ -84,13 +84,22 @@
 </template>
 
 <script>
+// import {loginUsers,users} from '../mock/data/users.js'
+
+import myAxios from '../axios';
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  }
+  },
+  mounted() {
+    // console.log(users)
+    myAxios.Get('user/list','').then(res => {
+      console.log(res.data);
+    })
+  },
 }
 </script>
 
