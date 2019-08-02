@@ -40,7 +40,7 @@ export default {
                    if(hasUser) {
                        resolve([200,{code:200,msg:'请求成功',user}]);
                    }else {
-                       resolve([200,{code:500,msg:'请求成功',user}]);
+                       resolve([200,{code:500,msg:'账号或密码错误',user}]);
                    }
                },1000);
            });

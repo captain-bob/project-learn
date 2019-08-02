@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import mock from './mock/mock'
+import mAxios from './axios/index'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -13,6 +14,8 @@ mock.bootsrap();
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+
+Vue.prototype.mAxios=mAxios
 
 /* eslint-disable no-new */
 new Vue({
