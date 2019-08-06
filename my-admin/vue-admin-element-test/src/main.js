@@ -9,6 +9,8 @@ import mAxios from './axios/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import './style/index.scss'
+
 mock.bootsrap();
 
 Vue.use(ElementUI)

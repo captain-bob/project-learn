@@ -2,7 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/login'
-import UserList from '@/components/page/userList'
+
+import UserListManage from '@/components/page/userListManage'
+import UserList from '@/components/page/userListManage/userList'
+
+import Bmap from '@/components/page/bmap'
+
+import Echarts from '@/components/page/echarts'
 
 Vue.use(Router)
 
@@ -18,11 +24,50 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
+      meta:{
+        name:'主页'
+      },
+      redirect:'Bmap',
       children:[
         {
-          path:'UserList',
-          name:'UserList',
-          component:UserList
+          path:'UserListManage',
+          name:'UserListManage',
+          component:UserListManage,
+          redirect:'UserListManage/UserList',
+          meta:{
+            name:'用户管理',
+            icon:'el-icon-s-custom'
+          },
+          children:[
+            {
+              path:'UserList',
+              name:'UserList',
+              component:UserList,
+              meta:{
+                name:'用户列表',
+                icon:'el-icon-s-order'
+              }
+
+            }
+          ]
+        },
+        {
+          path:'Bmap',
+          name:'Bmap',
+          component:Bmap,
+          meta:{
+            name:'百度地图',
+            icon:'el-icon-s-home'
+          }
+        },
+        {
+          path:'Echarts',
+          name:'Echarts',
+          component:Echarts,
+          meta:{
+            name:'图表管理',
+            icon:'el-icon-pie-chart'
+          }
         }
       ]
     }

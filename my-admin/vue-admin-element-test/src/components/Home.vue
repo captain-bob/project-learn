@@ -6,7 +6,11 @@
           class="header-one"
           :style="{width:isCollapse?'64px':'230px'}"
         >{{isCollapse?'':adminName}}</div>
-        <span class="header-two el-icon-d-arrow-left" @click="navCollapse"></span>
+        <span
+          class="header-two"
+          :class="isCollapse?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"
+          @click="navCollapse"
+        ></span>
       </div>
       <div class="header-three">
         <el-dropdown>
@@ -25,53 +29,33 @@
     <div class="main">
       <div class="main-nav">
         <el-menu
-          default-active="1-4-1"
+          :default-active="defaultActive"
           class="el-menu-vertical-demo"
           :collapse="isCollapse"
           background-color="#eef1f6"
+          :class="{navcollapse:isCollapse}"
         >
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span slot="title">导航一</span>
-            </template>
-            <el-menu-item-group>
-              <span slot="title">分组一</span>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <span slot="title">选项4</span>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
+          <SideBar :menuList="realRouter"></SideBar>
         </el-menu>
       </div>
       <div class="main-content">
         <div class="content-header clearfloat">
-          <strong>Home</strong>
-          <el-breadcrumb separator="/" class="fr">
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+          <strong class="marginL10">Home</strong>
+          <el-breadcrumb separator="/" class="fr marginR10 content-header-right">
+           
+            <el-breadcrumb-item
+               v-for="(item,i) in curentRoute"
+              :key="item.name"
+              :to="{name:item.name}"
+              :class="{'is-link-last':(i==curentRoute.length-1)}"
+            >{{item.meta.name}}</el-breadcrumb-item>
+    
           </el-breadcrumb>
         </div>
         <div class="content-body">
-          <router-view></router-view>
+          <transition name="fade">
+            <router-view></router-view>
+          </transition>
         </div>
       </div>
     </div>
@@ -81,14 +65,29 @@
 <script>
 import myAxios from "../axios";
 
+import SideBar from "./module/sideBar";
+
 export default {
   name: "Home",
+  components: {
+    SideBar
+  },
   data() {
     return {
       adminName: "VUEADMIN",
       userName: "张莫",
-      isCollapse: false
+      isCollapse: false,
+      defaultActive:''
     };
+  },
+  computed: {
+    realRouter: function() {
+      var router = this.$router.options.routes.find(v => v.name == "Home");
+      return router.children;
+    },
+    curentRoute:function() {
+      return this.$route.matched;
+    }
   },
   methods: {
     navCollapse() {
@@ -100,16 +99,40 @@ export default {
     myAxios.Get("user/list", "").then(res => {
       console.log(res.data);
     });
-  }
+    this.defaultActive=this.$route.name;
+  },
+  created() {
+    
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+/* 公共样式 */
+.marginL10 {
+  margin-left: 10px;
+}
+.marginR10 {
+  margin-right: 10px;
+}
+
 .container {
   text-align: left;
   height: 100%;
 }
+/* -------页面加载动画-------- */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+/* -------页面加载动画-------- */
 
 .header {
   display: flex;
@@ -134,6 +157,10 @@ export default {
   height: 60px;
   line-height: 60px;
   border-right: 1px solid #afbcdc;
+  transition: all 0.25s linear 0s;
+  -moz-transition: all 0.25s linear 0s;
+  -webkit-transition: all 0.25s linear 0s;
+  -o-transition: all 0.25s linear 0s;
 }
 
 .header-two {
@@ -169,17 +196,27 @@ export default {
 .main-content {
   flex: auto;
   padding: 15px;
-  display: flex;
-  flex-flow: column nowrap;
+  overflow-y: scroll;
+  /* display: flex;
+  flex-flow: column nowrap; */
 }
 
 .main .content-header {
   margin-bottom: 10px;
+  background: #e2e2e2;
+  height: 50px;
+  line-height: 50px;
 }
-.main .content-body {
-  flex: auto;
-  overflow-y: scroll;
+
+.main .content-header-right {
+  height: 50px;
+  line-height: 50px;
 }
+
+/* .main .content-body { */
+/* flex: auto; */
+/* overflow-y: scroll; */
+/* } */
 
 .clearfloat::after {
   display: block;
