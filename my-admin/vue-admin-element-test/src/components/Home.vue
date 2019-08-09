@@ -29,7 +29,7 @@
     <div class="main">
       <div class="main-nav">
         <el-menu
-          :default-active="defaultActive"
+          :default-active="this.$store.state.activeRoute"
           class="el-menu-vertical-demo"
           :collapse="isCollapse"
           background-color="#eef1f6"
@@ -40,7 +40,7 @@
       </div>
       <div class="main-content">
         <div class="content-header clearfloat">
-          <strong class="marginL10">Home</strong>
+          <strong class="marginL10">{{this.$store.getters.routeHeader}}</strong>
           <el-breadcrumb separator="/" class="fr marginR10 content-header-right">
            
             <el-breadcrumb-item
@@ -86,8 +86,14 @@ export default {
       return router.children;
     },
     curentRoute:function() {
-      return this.$route.matched;
-    }
+      // return this.$route.matched;
+      return this.$store.state.currentroute;
+    },
+    /* activeDefault用于element-ui导航组件设置当前激活菜单属性，本项目我用store的activeRoute替换了 */
+    // activeDefault:function() {
+    //   this.defaultActive=this.$route.name;
+    //   return this.defaultActive;
+    // }
   },
   methods: {
     navCollapse() {
@@ -99,7 +105,7 @@ export default {
     myAxios.Get("user/list", "").then(res => {
       console.log(res.data);
     });
-    this.defaultActive=this.$route.name;
+    
   },
   created() {
     

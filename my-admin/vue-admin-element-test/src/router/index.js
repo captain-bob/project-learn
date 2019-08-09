@@ -7,8 +7,10 @@ import UserListManage from '@/components/page/userListManage'
 import UserList from '@/components/page/userListManage/userList'
 
 import Bmap from '@/components/page/bmap'
+import BmapTest from '@/components/page/bmap/BmapTest'
 
 import Echarts from '@/components/page/echarts'
+import EchartsTest from '@/components/page/echarts/echarts-test'
 
 Vue.use(Router)
 
@@ -27,7 +29,7 @@ export default new Router({
       meta:{
         name:'主页'
       },
-      redirect:'Bmap',
+      redirect:'UserListManage',
       children:[
         {
           path:'UserListManage',
@@ -55,10 +57,22 @@ export default new Router({
           path:'Bmap',
           name:'Bmap',
           component:Bmap,
+          redirect:{name:'BmapTest'},
           meta:{
             name:'百度地图',
             icon:'el-icon-s-home'
-          }
+          },
+          children:[
+            {
+              path:'BmapTest',
+              name:'BmapTest',
+              component:BmapTest,
+              meta:{
+                name:'地图测试页',
+                icon:'el-icon-milk-tea'
+              }
+            }
+          ]
         },
         {
           path:'Echarts',
@@ -67,7 +81,18 @@ export default new Router({
           meta:{
             name:'图表管理',
             icon:'el-icon-pie-chart'
-          }
+          },
+          children:[
+            {
+              path:'EchartsTest',
+              name:'EchartsTest',
+              component:EchartsTest,
+              meta:{
+                name:'图表实例',
+                icon:'el-icon-grape'
+              }
+            }
+          ]
         }
       ]
     }
