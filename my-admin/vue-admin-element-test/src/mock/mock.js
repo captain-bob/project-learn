@@ -38,7 +38,7 @@ export default {
                    });
 
                    if(hasUser) {
-                       resolve([200,{code:200,msg:'请求成功',user}]);
+                       resolve([200,{code:200,msg:'请求成功',user,token:'abcdedfhijklmnokrjsuvmxyz'}]);
                    }else {
                        resolve([200,{code:500,msg:'账号或密码错误',user}]);
                    }
@@ -46,9 +46,26 @@ export default {
            });
     });
 
+    //模拟获取用户角色
+    mock.onGet('/userinfo').reply(config => {
+        let {Authorization}=config.headers;
+        
+        return new Promise((resolve,reject) => {
+            setTimeout(()=> {
+                if(Authorization) {
+                    resolve([200,{code:200,msg:'请求成功',role:'admin'}]);
+                }
+                else {
+                    resolve([200,{code:500,msg:'没有token'}]);
+                }
+            },1000);
+        });
+    });
+
     //模拟获取用户列表(全部或者单个，单个需要传name值)
     mock.onGet('/user/list').reply(config =>{
         let {name}=config.params;
+        
         let mockUsers=_users.filter(u => {
             if(name&&u.name.indexOf(name)==-1) return false;
             return true;

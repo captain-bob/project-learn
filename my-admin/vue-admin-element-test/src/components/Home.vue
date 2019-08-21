@@ -35,21 +35,19 @@
           background-color="#eef1f6"
           :class="{navcollapse:isCollapse}"
         >
-          <SideBar :menuList="realRouter"></SideBar>
+          <SideBar :menuList="this.$store.state.permission.navRoutes"></SideBar>
         </el-menu>
       </div>
       <div class="main-content">
         <div class="content-header clearfloat">
           <strong class="marginL10">{{this.$store.getters.routeHeader}}</strong>
           <el-breadcrumb separator="/" class="fr marginR10 content-header-right">
-           
             <el-breadcrumb-item
-               v-for="(item,i) in curentRoute"
+              v-for="(item,i) in curentRoute"
               :key="item.name"
               :to="{name:item.name}"
               :class="{'is-link-last':(i==curentRoute.length-1)}"
             >{{item.meta.name}}</el-breadcrumb-item>
-    
           </el-breadcrumb>
         </div>
         <div class="content-body">
@@ -77,7 +75,7 @@ export default {
       adminName: "VUEADMIN",
       userName: "张莫",
       isCollapse: false,
-      defaultActive:''
+      defaultActive: ""
     };
   },
   computed: {
@@ -85,10 +83,10 @@ export default {
       var router = this.$router.options.routes.find(v => v.name == "Home");
       return router.children;
     },
-    curentRoute:function() {
+    curentRoute: function() {
       // return this.$route.matched;
       return this.$store.state.currentroute;
-    },
+    }
     /* activeDefault用于element-ui导航组件设置当前激活菜单属性，本项目我用store的activeRoute替换了 */
     // activeDefault:function() {
     //   this.defaultActive=this.$route.name;
@@ -105,11 +103,8 @@ export default {
     myAxios.Get("user/list", "").then(res => {
       console.log(res.data);
     });
-    
   },
-  created() {
-    
-  },
+  created() {}
 };
 </script>
 
@@ -129,14 +124,18 @@ export default {
 }
 /* -------页面加载动画-------- */
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
+.fade-enter-active{
+  /* will-change: transform; */
+  transition: opacity .5s;
+  /* transform: translate3d(100%, 0, 0); */
 }
-.fade-enter,
-.fade-leave-active {
+.fade-enter {
   opacity: 0;
 }
+/* .fade-leave-active {
+  will-change: transform;
+  transform: translate3d(-100%, 0, 0);
+} */
 
 /* -------页面加载动画-------- */
 

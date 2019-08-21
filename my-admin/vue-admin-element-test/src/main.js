@@ -24,12 +24,35 @@ Vue.prototype.mAxios = mAxios
 
 
 router.beforeEach((to, from, next) => {
+
   if (to.path != '/login') {
     store.commit('setCurrentRoute', to.matched);
     store.commit('setActiveRoute', to.name);
   }
-
-  next();
+  if (store.state.token) {
+    if(store.state.permission.role) {
+      console.log('1111')
+      next();
+    }
+    else {
+      console.log(store)
+      // debugger
+      store.dispatch('permission/FETCH_PERMISSION').then(() => {
+        
+        next({path:to.path});
+        
+      });    
+    }
+  }
+  else {
+    
+    if (to.name == 'Login') {
+      next();
+    }
+    else {
+      next({ path: '/login' });
+    }
+  }
 })
 
 /* eslint-disable no-new */
@@ -38,20 +61,6 @@ new Vue({
   router,
   store,
   created() {
-    // function defaultRedirect(routes) {
-    //   routes.forEach((v, i) => {
-    //     if (v.children && v.children.length > 0) {
-    //       v.redirect = { name: v.children[0].name };
-    //       defaultRedirect(v.children);
-    //     }
-    //   })
-
-    // }
-    // console.log(router);
-    // defaultRedirect((router.options.routes)[1].children);
-    // console.log(router.options.routes);
-    // router.addRoutes(router.options.routes);
-    // router.push('/');
   },
   components: { App },
   template: '<App/>'

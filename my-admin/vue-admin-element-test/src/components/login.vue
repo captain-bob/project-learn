@@ -63,13 +63,13 @@ export default {
             .Post("/login", JSON.stringify(loginData))
             .then(res => {
               if (res.data.code === 200) {
-                console.log(res.data.msg);
+                console.log(res);
+                this.$store.commit('LOGIN_IN',res.data.token);
+                this.$router.replace('/');
               }
-              /* 
-              *登录成功，后续功能处理。。。。。。。。。。
-              *
-              */
-              // console.log(res);
+              else if(res.data.code === 500) {
+                alert(res.data.msg);
+              }
             })
             .catch(err => {
               console.log(err);

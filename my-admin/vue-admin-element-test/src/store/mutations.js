@@ -4,5 +4,8 @@ export default {
     },
     setActiveRoute(state,name) {
         state.activeRoute=name;
+    },
+    LOGIN_IN(state,token) {
+        state.token=token;
     }
 }
