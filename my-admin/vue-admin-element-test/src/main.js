@@ -20,13 +20,14 @@ Vue.config.productionTip = false
 
 Vue.prototype.mAxios = mAxios
 
-
+ 
 
 
 router.beforeEach((to, from, next) => {
 
   if (to.path != '/login') {
     store.commit('setCurrentRoute', to.matched);
+    
     store.commit('setActiveRoute', to.name);
   }
   if (store.state.token) {

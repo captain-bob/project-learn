@@ -35,3 +35,44 @@ const Post = (url, params) => {
 };
 
 export default { Get, Post };
+
+
+// axios.get('/user/list',{
+//     params:{},
+//     headers:[]
+// }).then(res=> {
+
+// }).catch(err => {
+
+// });
+// axios.all([aixos.get('',{}),axios.post('',{})]).then(axios.spread(function(ahone,antwo) {
+
+// }))
+
+// var instance=axios.create({
+//     baseURL:'',
+//     timeout:1000,
+//     headers:{}
+// })
+
+// //AXIOS全局配置
+// axios.defaults.baseURL='';
+// axios.defaults.headers.commom['Authorization']=AUTH_TOKEN;
+
+// 实例
+// var instance=axios.create({
+
+// })
+
+// axios.interceptors.request.use(function(config) {
+//     //处理
+//     return config;
+// },function (err) {
+//     //处理
+//     return Promise.reject(err);
+// })
+// axios.interceptors.response.use(function (config) {
+
+// })
+
+// axios.interceptors.request.eject()

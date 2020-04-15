@@ -124,9 +124,9 @@ export default {
 }
 /* -------页面加载动画-------- */
 
-.fade-enter-active{
+.fade-enter-active {
   /* will-change: transform; */
-  transition: opacity .5s;
+  transition: opacity 0.5s;
   /* transform: translate3d(100%, 0, 0); */
 }
 .fade-enter {
@@ -157,6 +157,10 @@ export default {
 .header-one {
   /* width: 230px; */
   text-align: center;
+
+  overflow: hidden;
+  /* visibility: hidden; */
+ 
 
   font: bolder 20px "微软雅黑";
   height: 60px;

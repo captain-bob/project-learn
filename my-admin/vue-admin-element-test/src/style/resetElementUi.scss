@@ -1,10 +1,16 @@
-
- /* 覆盖element-ui导航组件出现的bug（导航目录收拢时，el-submenu下的titlez组件浮现） */
+/* 覆盖element-ui导航组件出现的bug（导航目录收拢时，el-submenu下的titlez组件浮现） */
 .navcollapse {
     .el-submenu {
         &>.el-submenu__title {
             &>span {
                 display: none;
+
+                height: 0;
+                width: 0;
+                overflow: hidden;
+                visibility: hidden;
+                display: inline-block;
+
             }
 
             .el-submenu__icon-arrow {
